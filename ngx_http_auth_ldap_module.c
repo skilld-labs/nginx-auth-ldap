@@ -1528,11 +1528,11 @@ ngx_http_auth_ldap_read_handler(ngx_event_t *rev)
 
             // if LDAP_SERVER_DOWN (usually timeouts or server disconnects)
             if (rc == LDAP_SERVER_DOWN && \
-                c->server->max_down_retries_count < c->server->max_down_retries) { 
-                /** 
-                    update counter (this is always reset in 
-                    ngx_http_auth_ldap_connect() for a successful ldap 
-                    connection  
+                c->server->max_down_retries_count < c->server->max_down_retries) {
+                /**
+                    update counter (this is always reset in
+                    ngx_http_auth_ldap_connect() for a successful ldap
+                    connection
                 **/
                 c->server->max_down_retries_count++;
                 ngx_log_error(NGX_LOG_ERR, c->log, 0, "http_auth_ldap: LDAP_SERVER_DOWN: retry count: %d",
@@ -1542,7 +1542,7 @@ ngx_http_auth_ldap_read_handler(ngx_event_t *rev)
                 // timer call to this read handler again
                 ngx_http_auth_ldap_reconnect_handler(rev);
                 return;
-            } 
+            }
 
             return;
         }
@@ -1651,7 +1651,7 @@ ngx_http_auth_ldap_connect(ngx_http_auth_ldap_connection_t *c)
     ngx_addr_t *addr;
     ngx_int_t rc;
 
-    addr = &c->server->parsed_url.addrs[ngx_random() % c->server->parsed_url.naddrs];
+    addr = &c->server->parsed_url.addrs[0];
 
     ngx_log_debug1(NGX_LOG_DEBUG_HTTP, c->log, 0, "http_auth_ldap: Connecting to LDAP server \"%V\".",
         &addr->name);
